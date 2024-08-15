@@ -10,6 +10,8 @@ export class ProductListComponent {
 
   products: any
 
+
+
   ngOnInit(){
     this.products = products;
   }

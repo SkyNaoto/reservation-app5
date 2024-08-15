@@ -4,22 +4,35 @@ import { ProductListComponent } from './product-listings/product-listings.compon
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductComponent } from './product.component';
+import { ProductSubListComponent } from './product-Sub-listings/product-Sub-listings.component';
+import { SubComponent } from './Sub/Sub.component';
 
 const routes: Routes = [
   {
     path: 'products', component:ProductComponent,
     children: [
-      { path: '',component: ProductListComponent},
-      { path: ':productId',component: ProductDetailComponent}    
+      { path: '',component: ProductSubListComponent},
+      { path: ':subId',component: ProductListComponent,
+        children: [
+
+          // { path: ':productId',component: SubComponent}
+
+          { path: '',component: SubComponent},
+          { path: ':productId',component: ProductDetailComponent}
+        ]
+      }    
     ]
   }
 ];
+
 
 @NgModule({
   declarations: [
     ProductComponent,
     ProductDetailComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductSubListComponent,
+    SubComponent
     ],
   imports: [
     RouterModule.forChild(routes),

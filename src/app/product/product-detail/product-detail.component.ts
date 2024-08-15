@@ -13,9 +13,14 @@ export class ProductDetailComponent {
 
   constructor(private route:ActivatedRoute){}
 
+  // isDetailView(): boolean {
+  //   return this.route.snapshot.children.length > 0;
+  // }
+
   ngOnInit(){
     this.route.paramMap.subscribe(params => {
       this.product = products[+params.get('productId')!]
+      console.log('params:', params);
     })
   }
 

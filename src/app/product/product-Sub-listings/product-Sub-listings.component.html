@@ -1,0 +1,18 @@
+
+<div class="container text-center">
+    <br>
+    <div class="row">
+        <div *ngFor="let type of types; let subId = index" class="col">
+            <a [routerLink]="[subId]">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{type.name}}</h5>
+                        <p class="card-text">{{type.description}}</p>
+                    </div>
+                </div>    
+            </a>
+        </div>
+    </div>
+</div>
+
+
