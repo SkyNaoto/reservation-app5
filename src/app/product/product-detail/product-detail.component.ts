@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { productService } from '../shared/product.service';
 
@@ -13,25 +13,16 @@ export class ProductDetailComponent {
 
   constructor(
     private route:ActivatedRoute,
-    private productService: productService
+    // private productService: productService,
+    @Inject('DataService') private productService: any
   ){}
 
   ngOnInit(){
     this.route.paramMap.subscribe(params => {
       // this.product = products[+params.get('productId')!]
       // this.product = this.productService.getProductById(params.get('productId')!)
-      const productObservable = this.productService.getProductById(params.get('productId')!)
-      productObservable.subscribe({
-        next: (data) => {
-          this.product = data;
-        },
-        error: (err) => {
-          console.error('エラーが発生しました: ' + err);
-        },
-        complete: () => {
-          console.log('完了しました！');
-        },
-      })
+      this.product = this.productService.getProductById(params.get('productId')!)
+      // 多分ここに、MongoDBの時は subscribe してデータを格納する必要がある。ここはこれから追加作業が必要。コーズ110の5：50ぐらいから参照。
     })
   }
 
