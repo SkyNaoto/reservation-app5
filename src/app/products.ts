@@ -1,7 +1,7 @@
 export const products = [
     {
         coverImage: './assets/img/phone-cover.jpg',
-        name: 'Phone XL',
+        name: 'Phone XL_dev',
         price: 799,
         description: 'A large phone with one of the best screens',
         heading1: 'サンプルテキスト１',

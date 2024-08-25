@@ -5,6 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductComponent } from './product.component';
 import { productService } from './shared/product.service';
+import { dataServiceFactory } from './shared/data.service.factory';
+import { HttpClient } from '@angular/common/http';
 
 const routes: Routes = [
   {
@@ -27,7 +29,11 @@ const routes: Routes = [
     CommonModule
     ],
   providers: [
-    productService
+    {
+      provide: 'DataService', //識別子をDataServiceとしてサービスを提供
+      useFactory: dataServiceFactory,
+      deps:[HttpClient]  
+    }
   ],
   bootstrap: []
 })

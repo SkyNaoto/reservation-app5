@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { productService } from '../shared/product.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -12,24 +13,36 @@ export class ProductListComponent {
 
   products: any
 
-  constructor(private productService: productService){
+  constructor(@Inject('DataService') private productService: any){
 
   }
 
-  ngOnInit(){
-    // this.products = this.productService.getProducts();
-    const productObservable = this.productService.getProducts();
-    productObservable.subscribe({
-      next: (data) => {
-        this.products = data;
-      },
-      error: (err) => {
-        console.error('エラーが発生しました: ' + err);
-      },
-      complete: () => {
-        console.log('完了しました！');
-      },
-    });
+
+  ngOnInit() {
+    const data = this.productService.getProducts();
+    if (data instanceof Observable) {
+      data.subscribe(response => this.products = response);
+    } else {
+      this.products = data;
+    }
+  
+
+
+
+  // ngOnInit(){
+  //   // this.products = this.productService.getProducts();
+  //   const productObservable = this.productService.getProducts();
+  //   productObservable.subscribe({
+  //     next: (data) => {
+  //       this.products = data;
+  //     },
+  //     error: (err) => {
+  //       console.error('エラーが発生しました: ' + err);
+  //     },
+  //     complete: () => {
+  //       console.log('完了しました！');
+  //     },
+  //   });
 
     // コードの中での問題は、subscribeのコールバック関数内でthisが正しくバインドされていないことが原因です。JavaScriptの関数内でのthisは、デフォルトでその関数が呼び出されたコンテキスト（ここではsubscribe関数の中）にバインドされます。このため、this.productsが期待通りにProductListingsComponentのthisを指していません。
     // 修正方法
